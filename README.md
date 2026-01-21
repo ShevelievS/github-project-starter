@@ -47,11 +47,12 @@ starter create <template_name> <project_name>
 ```
 
 This will generate:
+```bash
 my_project/
 ├── main.py
 ├── README.md
 ├── requirements.txt
 └── .gitignore
-
+```
 
 
