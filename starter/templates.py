@@ -12,6 +12,22 @@ TEMPLATE_INFO = {
     "python": {
         "description": "Python project with basic structure",
         "language": "Python",
+    },
+    "java": {
+        "description": "Java project with Maven structure",
+        "language": "Java",
+    },
+    "javascript": {
+        "description": "JavaScript/Node.js project with npm",
+        "language": "JavaScript",
+    },
+    "cpp": {
+        "description": "C++ project with CMake build system",
+        "language": "C++",
+    },
+    "csharp": {
+        "description": "C# .NET project structure",
+        "language": "C#",
     }
 }
 
