@@ -1,48 +1,33 @@
 # starter/templates.py
 """
-Template discovery and validation.
-WHY: Centralizes template-related logic. When we add remote templates
-     or template configuration, changes happen only here.
+Template discovery, validation, and metadata.
 """
 
 from pathlib import Path
 
 
+# Template metadata
+# WHY: Centralized information about each template
+TEMPLATE_INFO = {
+    "python": {
+        "description": "Python project with basic structure",
+        "language": "Python",
+    }
+}
+
+
 def get_templates_directory():
-    """
-    Get the absolute path to templates directory.
-    
-    WHY: No hardcoded paths. Works regardless of installation location.
-         Uses __file__ to find templates relative to this module.
-    """
-    # Get the directory containing this file (starter/)
+    """Get absolute path to templates directory."""
     starter_dir = Path(__file__).parent
-    
-    # Go up one level and into templates/
-    # WHY: templates/ is sibling to starter/, not inside it
     templates_dir = starter_dir.parent / "templates"
-    
     return templates_dir
 
 
 def validate_template(template_name):
-    """
-    Check if a template exists and return its path.
-    
-    WHY: Single source of truth for template validation.
-         Returns Path object for easy file operations.
-    
-    Args:
-        template_name: String name of the template (e.g., "python")
-        
-    Returns:
-        Path object if template exists, None otherwise
-    """
+    """Check if template exists and return its path."""
     templates_dir = get_templates_directory()
     template_path = templates_dir / template_name
     
-    # Check if template directory exists and is actually a directory
-    # WHY: Prevents errors from files named like templates
     if template_path.exists() and template_path.is_dir():
         return template_path
     
@@ -50,17 +35,39 @@ def validate_template(template_name):
 
 
 def list_available_templates():
-    """
-    Get list of all available template names.
-    
-    WHY: Useful for showing available options to users.
-         Not used in MVP but demonstrates extensibility.
-    """
+    """Get list of all available template names."""
     templates_dir = get_templates_directory()
     
-    # Only return directories, not files
-    # WHY: Templates are directories, not individual files
     if not templates_dir.exists():
         return []
     
-    return [d.name for d in templates_dir.iterdir() if d.is_dir()]
+    return sorted([d.name for d in templates_dir.iterdir() if d.is_dir()])
+
+
+def get_template_info(template_name):
+    """
+    Get metadata about a template.
+    WHY: Provides detailed information for display and validation.
+    """
+    template_path = validate_template(template_name)
+    
+    if not template_path:
+        return None
+    
+    # Get base info from metadata
+    info = TEMPLATE_INFO.get(template_name, {
+        "description": "No description available",
+        "language": "Unknown"
+    })
+    
+    # Count files in template
+    files = []
+    for item in sorted(template_path.rglob("*")):
+        if item.is_file():
+            rel_path = item.relative_to(template_path)
+            files.append(str(rel_path))
+    
+    info["file_count"] = len(files)
+    info["files"] = files
+    
+    return info

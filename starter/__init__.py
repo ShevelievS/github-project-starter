@@ -1,10 +1,9 @@
 # starter/__init__.py
 """
 GitHub Project Starter package.
-Exposes main entry point for CLI usage.
 """
 
-from starter.cli import main
-
 __version__ = "0.1.0"
-__all__ = ["main"]
+
+# Не импортируем main здесь, чтобы избежать предупреждения
+# WHY: Импорт main при загрузке пакета создает конфликт с -m запуском
