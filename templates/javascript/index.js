@@ -15,9 +15,3 @@ main();
 
 // Export for module usage
 module.exports = { main };
-```
-
-### templates/javascript/.npmrc
-```
-# npm configuration
-save-exact=true
