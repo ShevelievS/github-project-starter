@@ -234,7 +234,7 @@ MIT License - see LICENSE file for details
 
 ## Author
 
-Your Name - [@ShevelievS](https://github.com/ShevelievS)
+[@ShevelievS](https://github.com/ShevelievS)
 
 ## Acknowledgments
 
